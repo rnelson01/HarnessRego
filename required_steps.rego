@@ -1,5 +1,5 @@
 package pipeline_forbidden
-required_steps = ["Create_Change","Check_Cherwell_Approval"]
+required_steps = ["Create_Change","Check_Approval"]
 included_orgs = ["default","org_id"]
 excluded_orgs = ["org","org2"]
 excluded_services = ["samplek8s","samplek8s","samplehelm","account.samplehelm","account.samplek8s"]
