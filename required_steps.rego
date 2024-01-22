@@ -1,10 +1,10 @@
 package pipeline_forbidden
-required_steps = ["Create_Change","Check_Approval"]
-included_orgs = ["default","org_id"]
-excluded_orgs = ["org","org2"]
-excluded_services = ["samplek8s","samplek8s","samplehelm","account.samplehelm","account.samplek8s"]
+required_steps = ["Create_Change","Check_Approval"] #stepIDs
+included_orgs = ["default","org_id"] #orgIds
+excluded_orgs = ["org","org2"] #orgIDs
+excluded_services = ["samplek8s","samplek8s","samplehelm","account.samplehelm","account.samplek8s"] #serviceIDs
 
-deny[sprintf("Deployments to '%s' require approval.  Stage '%s' is missing required step '%s' service '%s'", [all_stages[_].spec.infrastructure.environment.type, all_stages[_].name,required_steps[_],all_stages[_].spec.service.service.identifier])] {
+deny[sprintf("Stage '%s' is missing required step '%s'", [all_stages[_].name,required_steps[_]])] {
     input.metadata.projectMetadata.orgIdentifier == included_orgs[_] #filter only included org list
     input.metadata.projectMetadata.orgIdentifier != excluded_orgs[_] #filter excluded orgs
     parallel_stages := [s | s = input.pipeline.stages[_].parallel[_].stage] #gather all stages 1
